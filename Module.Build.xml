@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<CreateModuleInfo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Resources NoComponents="true">
+    <CoreServicesDlls>
+      <string>.\Decisions.Equifax\obj\Debug\net5.0\win-x64\Decisions.Equifax.dll</string>
+    </CoreServicesDlls>
+    <CliDlls/>
+    <WebPages/>
+	<SilverlightDlls/>
+    <AgentDlls/>
+    <InstallScript/>
+    <SqlScripts/>
+    <ObjectsToImport/>
+    <MsSqlScript/>
+  </Resources>
+  <Version/>
+  <Description>The Equifax Services Module allows the fetching and processing report data from Equifax services.</Description>
+</CreateModuleInfo>
