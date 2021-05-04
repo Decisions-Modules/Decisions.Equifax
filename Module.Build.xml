@@ -14,5 +14,6 @@
     <MsSqlScript/>
   </Resources>
   <Version/>
+  <ImagePath>./image.png</ImagePath>
   <Description>The Equifax Services Module allows the fetching and processing report data from Equifax services.</Description>
 </CreateModuleInfo>
