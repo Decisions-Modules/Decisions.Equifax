@@ -17,7 +17,6 @@ namespace Decisions.Equifax.PrequalificationOfOne.Response
             [JsonProperty("sourceOfAddress")]
             [AllowNull]
             public new FraudVictimIndicator[] SourceOfAddress { get; set; }
-            
         }
     }
 }

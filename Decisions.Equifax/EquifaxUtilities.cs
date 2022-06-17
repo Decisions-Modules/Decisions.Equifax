@@ -4,6 +4,7 @@ using System.Net;
 using System.Text.Encodings.Web;
 using Decisions.Equifax.ConsumerCreditReport.Request;
 using Decisions.Equifax.ConsumerCreditReport.Response;
+using Decisions.Equifax.PrequalificationOfOne.Response;
 using DecisionsFramework;
 using DecisionsFramework.Design.ConfigurationStorage.Attributes;
 using DecisionsFramework.Design.Flow;
@@ -19,7 +20,7 @@ namespace Decisions.Equifax
     {
         private static readonly Log log = new Log(EquifaxConstants.LogCat);
         
-        internal static ConsumerCreditReportResponse ExecuteCreditReportRequest(ConsumerCreditReportRequest request, string scope, string requestUrl )
+        internal static ConsumerCreditReportResponse ExecuteCreditReportRequest(ConsumerCreditReportRequest request, string scope, string requestUrl, string stepCalled )
         {
             JsonSerializerSettings jsonSettings = new JsonSerializerSettings
             {
@@ -63,8 +64,19 @@ namespace Decisions.Equifax
                     }
                 }
 
-                ConsumerCreditReportResponse cr = JsonConvert.DeserializeObject<ConsumerCreditReportResponse>(
-                    responseString, new JsonSerializerSettings {NullValueHandling = NullValueHandling.Ignore});
+                ConsumerCreditReportResponse cr = new ConsumerCreditReportResponse();
+                if (stepCalled == "LimitedCreditReport")
+                {
+                    cr = JsonConvert.DeserializeObject<ConsumerCreditReportResponse>(
+                        responseString, new JsonSerializerSettings {NullValueHandling = NullValueHandling.Ignore});
+                }
+
+                if (stepCalled == "Prequalification")
+                {
+                    cr = JsonConvert.DeserializeObject<PrequalificationOfOneResponse>(
+                        responseString, new JsonSerializerSettings {NullValueHandling = NullValueHandling.Ignore});
+                }
+
                 return cr;
             }
             catch (WebException ex)
