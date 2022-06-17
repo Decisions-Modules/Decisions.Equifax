@@ -18,25 +18,33 @@ namespace Decisions.Equifax
     public class EquifaxSettings : AbstractModuleSettings, IInitializable, IValidationSource
     {
         [ORMField]
-        [PropertyClassification(0, "OAuth Url", "OAuth Settings")]
+        [PropertyClassification(new string[] {"OAuth Settings"} , "OAuth URL",4)]
         public string EquifaxOAuthUrl { get; set; }
 
         [ORMField]
-        [PropertyClassification(1, "API Client ID", "OAuth Settings")]
+        [PropertyClassification(new string[] {"OAuth Settings"} , "API Client ID", 5)]
         public string EquifaxClientId { get; set; }
 
         [ORMField]
-        [PropertyClassification(2, "API Client Secret", "OAuth Settings")]
+        [PropertyClassification(new string[] {"OAuth Settings"} , "API Client Secret", 6)]
         public string EquifaxClientSecret { get; set; }
-        
         [ORMField]
-        [PropertyClassification(3, "API Endpoint Url", "Consumer Credit Report")]
+        [PropertyClassification(new string[] {"Pre-qualification of One"} , "API Endpoint Url", 2)]
+        public string EquifaxPrequalificationOfOneEndpoint { get; set; }
+
+        [ORMField]
+        [PropertyClassification(new string[] {"Pre-qualification of One"}, "OAuth Scope", 3)]
+        public string EquifaxPrequalificationOfOneScope { get; set; }
+       
+        [ORMField]
+        [PropertyClassification(new string[] {"Limited Consumer Report"}, "API Endpoint Url", 0)]
         public string EquifaxConsumerCreditReportEndpoint { get; set; }
 
         [ORMField]
-        [PropertyClassification(4, "OAuth Scope", "Consumer Credit Report")]
+        [PropertyClassification(new string[] {"Limited Consumer Report"}, "OAuth Scope", 1)]
         public string EquifaxConsumerCreditReportScope { get; set; }
-        
+
+       
 
         public ValidationIssue[] GetValidationIssues()
         {
@@ -61,6 +69,14 @@ namespace Decisions.Equifax
             // OAuth Scope for Endpoint
             if (string.IsNullOrWhiteSpace(EquifaxConsumerCreditReportScope))
                 validationIssues.Add(new ValidationIssue(this, "The OAuth Scope for Consumer Credit Report is required.", null, BreakLevel.Fatal, nameof(EquifaxConsumerCreditReportScope)));
+
+            // API Endpoint
+            if (string.IsNullOrWhiteSpace(EquifaxPrequalificationOfOneEndpoint))
+                validationIssues.Add(new ValidationIssue(this, "The Pre-qualification of One Endpoint Url is required.", null, BreakLevel.Fatal, nameof(EquifaxPrequalificationOfOneEndpoint)));
+
+            // OAuth Scope for Endpoint
+            if (string.IsNullOrWhiteSpace(EquifaxPrequalificationOfOneScope))
+                validationIssues.Add(new ValidationIssue(this, "The OAuth Scope for Pre-qualification of One is required.", null, BreakLevel.Fatal, nameof(EquifaxPrequalificationOfOneScope)));
 
             return validationIssues.ToArray();
         }
