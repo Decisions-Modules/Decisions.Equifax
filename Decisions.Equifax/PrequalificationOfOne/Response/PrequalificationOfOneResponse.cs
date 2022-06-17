@@ -15,7 +15,6 @@ namespace Decisions.Equifax.PrequalificationOfOne.Response
         public partial class AddressElement: ConsumerCreditReport.Response.AddressElement
         {
             [JsonProperty("sourceOfAddress")]
-            [JsonConverter(typeof(Object))]
             [AllowNull]
             public new FraudVictimIndicator[] SourceOfAddress { get; set; }
             
