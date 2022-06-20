@@ -155,6 +155,7 @@ namespace Decisions.Equifax.ConsumerCreditReport.Response
         public string ZipCode { get; set; }
 
         [JsonProperty("sourceOfAddress")]
+        [JsonConverter(typeof(FraudVictimIndicatorDataConverter))]
         public FraudVictimIndicator SourceOfAddress { get; set; }
 
         [JsonProperty("dateFirstReported")]
