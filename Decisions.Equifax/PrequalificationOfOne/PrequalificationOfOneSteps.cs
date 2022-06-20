@@ -8,18 +8,18 @@ using DecisionsFramework.ServiceLayer;
 namespace Decisions.Equifax.PrequalificationOfOne
 {
     [AutoRegisterMethodsOnClass(true, "Integration/Equifax/Pre-qualification of One")]
-    public class PrequalificationOfOneSteps 
+    public class PreQualificationOfOneSteps 
     {
         private static readonly Log log = new Log(EquifaxConstants.LogCat);
         
         /// <summary>
         /// Step: Get Pre-qualification of One (Integration/Equifax/Consumer Credit Report/Pre-qualification of One)
         /// </summary>
-        public static ConsumerCreditReportResponse GetPrequalificationOfOne(PrequalificationOfOneRequest request)
+        public static ConsumerCreditReportResponse GetPrequalificationOfOne(PreQualificationOfOneRequest request)
         {
-            string scope = ModuleSettingsAccessor<EquifaxSettings>.Instance.EquifaxPrequalificationOfOneScope;
-            string requestUrl = ModuleSettingsAccessor<EquifaxSettings>.Instance.EquifaxPrequalificationOfOneEndpoint;
-            string stepCalled = "Prequalification";
+            string scope = ModuleSettingsAccessor<EquifaxSettings>.Instance.EquifaxPreQualificationOfOneScope;
+            string requestUrl = ModuleSettingsAccessor<EquifaxSettings>.Instance.EquifaxPreQualificationOfOneEndpoint;
+            string stepCalled = "PreQualification";
             return EquifaxUtilities.ExecuteCreditReportRequest(request, scope, requestUrl, stepCalled);
         }
     }

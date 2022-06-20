@@ -29,12 +29,12 @@ namespace Decisions.Equifax
         [PropertyClassification(new string[] {"OAuth Settings"} , "API Client Secret", 6)]
         public string EquifaxClientSecret { get; set; }
         [ORMField]
-        [PropertyClassification(new string[] {"Pre-qualification of One"} , "API Endpoint Url", 2)]
-        public string EquifaxPrequalificationOfOneEndpoint { get; set; }
+        [PropertyClassification(new string[] {"PreQualification of One"} , "API Endpoint Url", 2)]
+        public string EquifaxPreQualificationOfOneEndpoint { get; set; }
 
         [ORMField]
-        [PropertyClassification(new string[] {"Pre-qualification of One"}, "OAuth Scope", 3)]
-        public string EquifaxPrequalificationOfOneScope { get; set; }
+        [PropertyClassification(new string[] {"PreQualification of One"}, "OAuth Scope", 3)]
+        public string EquifaxPreQualificationOfOneScope { get; set; }
        
         [ORMField]
         [PropertyClassification(new string[] {"Limited Consumer Report"}, "API Endpoint Url", 0)]
@@ -71,12 +71,12 @@ namespace Decisions.Equifax
                 validationIssues.Add(new ValidationIssue(this, "The OAuth Scope for Consumer Credit Report is required.", null, BreakLevel.Fatal, nameof(EquifaxConsumerCreditReportScope)));
 
             // API Endpoint
-            if (string.IsNullOrWhiteSpace(EquifaxPrequalificationOfOneEndpoint))
-                validationIssues.Add(new ValidationIssue(this, "The Pre-qualification of One Endpoint Url is required.", null, BreakLevel.Fatal, nameof(EquifaxPrequalificationOfOneEndpoint)));
+            if (string.IsNullOrWhiteSpace(EquifaxPreQualificationOfOneEndpoint))
+                validationIssues.Add(new ValidationIssue(this, "The PreQualification of One Endpoint Url is required.", null, BreakLevel.Fatal, nameof(EquifaxPreQualificationOfOneEndpoint)));
 
             // OAuth Scope for Endpoint
-            if (string.IsNullOrWhiteSpace(EquifaxPrequalificationOfOneScope))
-                validationIssues.Add(new ValidationIssue(this, "The OAuth Scope for Pre-qualification of One is required.", null, BreakLevel.Fatal, nameof(EquifaxPrequalificationOfOneScope)));
+            if (string.IsNullOrWhiteSpace(EquifaxPreQualificationOfOneScope))
+                validationIssues.Add(new ValidationIssue(this, "The OAuth Scope for PreQualification of One is required.", null, BreakLevel.Fatal, nameof(EquifaxPreQualificationOfOneScope)));
 
             return validationIssues.ToArray();
         }

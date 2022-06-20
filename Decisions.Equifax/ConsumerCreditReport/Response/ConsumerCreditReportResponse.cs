@@ -47,6 +47,7 @@ namespace Decisions.Equifax.ConsumerCreditReport.Response
         public string EcoaInquiryType { get; set; }
 
         [JsonProperty("hitCode")]
+        [JsonConverter(typeof(FraudVictimIndicatorDataConverter))]
         public FraudVictimIndicator HitCode { get; set; }
 
         [JsonProperty("fileSinceDate")]
@@ -168,6 +169,7 @@ namespace Decisions.Equifax.ConsumerCreditReport.Response
 
     [DataContract]
     [Writable]
+    [JsonConverter(typeof(FraudVictimIndicatorDataConverter))]
     public partial class FraudVictimIndicator
     {
         [JsonProperty("code")]

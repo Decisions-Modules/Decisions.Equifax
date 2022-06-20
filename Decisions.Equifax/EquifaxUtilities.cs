@@ -4,7 +4,7 @@ using System.Net;
 using System.Text.Encodings.Web;
 using Decisions.Equifax.ConsumerCreditReport.Request;
 using Decisions.Equifax.ConsumerCreditReport.Response;
-using Decisions.Equifax.PrequalificationOfOne.Response;
+using Decisions.Equifax.PreQualificationOfOne.Response;
 using DecisionsFramework;
 using DecisionsFramework.Design.ConfigurationStorage.Attributes;
 using DecisionsFramework.Design.Flow;
@@ -71,9 +71,9 @@ namespace Decisions.Equifax
                         responseString, new JsonSerializerSettings {NullValueHandling = NullValueHandling.Ignore});
                 }
 
-                if (stepCalled == "Prequalification")
+                if (stepCalled == "PreQualification")
                 {
-                    cr = JsonConvert.DeserializeObject<PrequalificationOfOneResponse>(
+                    cr = JsonConvert.DeserializeObject<PreQualificationOfOneResponse>(
                         responseString, new JsonSerializerSettings {NullValueHandling = NullValueHandling.Ignore});
                 }
 
