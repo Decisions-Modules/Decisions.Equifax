@@ -170,7 +170,6 @@ namespace Decisions.Equifax.ConsumerCreditReport.Response
 
     [DataContract]
     [Writable]
-    [JsonConverter(typeof(FraudVictimIndicatorDataConverter))]
     public partial class FraudVictimIndicator
     {
         [JsonProperty("code")]
@@ -286,6 +285,7 @@ namespace Decisions.Equifax.ConsumerCreditReport.Response
         public string IndustryCode { get; set; }
 
         [JsonProperty("currentIntentOrDispositionCode")]
+        [JsonConverter(typeof(FraudVictimIndicatorDataConverter))]
         public FraudVictimIndicator CurrentIntentOrDispositionCode { get; set; }
 
         [JsonProperty("dispositionDate")]
@@ -312,6 +312,7 @@ namespace Decisions.Equifax.ConsumerCreditReport.Response
         public string ClientNameOrNumber { get; set; }
 
         [JsonProperty("statusCode")]
+        [JsonConverter(typeof(FraudVictimIndicatorDataConverter))]
         public FraudVictimIndicator StatusCode { get; set; }
 
         [JsonProperty("narrativeCodes")]
@@ -342,9 +343,11 @@ namespace Decisions.Equifax.ConsumerCreditReport.Response
         public string DateOfFirstDelinquency { get; set; }
 
         [JsonProperty("accountDesignatorCode")]
+        [JsonConverter(typeof(FraudVictimIndicatorDataConverter))]
         public FraudVictimIndicator AccountDesignatorCode { get; set; }
 
         [JsonProperty("creditorClassificationCode")]
+        [JsonConverter(typeof(FraudVictimIndicatorDataConverter))]
         public FraudVictimIndicator CreditorClassificationCode { get; set; }
     }
 
@@ -578,18 +581,23 @@ namespace Decisions.Equifax.ConsumerCreditReport.Response
         public string ZipCode { get; set; }
 
         [JsonProperty("typeOfAddress")]
+        [JsonConverter(typeof(FraudVictimIndicatorDataConverter))]
         public FraudVictimIndicator TypeOfAddress { get; set; }
 
         [JsonProperty("returnCode1")]
+        [JsonConverter(typeof(FraudVictimIndicatorDataConverter))]
         public FraudVictimIndicator ReturnCode1 { get; set; }
 
         [JsonProperty("returnCode2")]
+        [JsonConverter(typeof(FraudVictimIndicatorDataConverter))]
         public FraudVictimIndicator ReturnCode2 { get; set; }
 
         [JsonProperty("returnCode3")]
+        [JsonConverter(typeof(FraudVictimIndicatorDataConverter))]
         public FraudVictimIndicator ReturnCode3 { get; set; }
 
         [JsonProperty("returnCode4")]
+        [JsonConverter(typeof(FraudVictimIndicatorDataConverter))]
         public FraudVictimIndicator ReturnCode4 { get; set; }
     }
 
@@ -621,6 +629,7 @@ namespace Decisions.Equifax.ConsumerCreditReport.Response
         public string MonthsReviewed { get; set; }
 
         [JsonProperty("accountDesignator")]
+        [JsonConverter(typeof(FraudVictimIndicatorDataConverter))]
         public FraudVictimIndicator AccountDesignator { get; set; }
 
         [JsonProperty("accountNumber")]
@@ -645,10 +654,12 @@ namespace Decisions.Equifax.ConsumerCreditReport.Response
         public long? PastDueAmount { get; set; }
 
         [JsonProperty("portfolioTypeCode")]
+        [JsonConverter(typeof(FraudVictimIndicatorDataConverter))]
         public FraudVictimIndicator PortfolioTypeCode { get; set; }
 
         [JsonProperty("rate")]
-        public Rate Rate { get; set; }
+        [JsonConverter(typeof(FraudVictimIndicatorDataConverter))]
+        public FraudVictimIndicator Rate { get; set; }
 
         [JsonProperty("narrativeCodes")]
         public FraudVictimIndicator[] NarrativeCodes { get; set; }
@@ -657,6 +668,7 @@ namespace Decisions.Equifax.ConsumerCreditReport.Response
         public string[] RawNarrativeCodes { get; set; }
 
         [JsonProperty("accountTypeCode")]
+        [JsonConverter(typeof(FraudVictimIndicatorDataConverter))]
         public FraudVictimIndicator AccountTypeCode { get; set; }
 
         [JsonProperty("lastPaymentDate")]
@@ -666,13 +678,15 @@ namespace Decisions.Equifax.ConsumerCreditReport.Response
         public long? ScheduledPaymentAmount { get; set; }
 
         [JsonProperty("termsDurationCode")]
+        [JsonConverter(typeof(FraudVictimIndicatorDataConverter))]
         public FraudVictimIndicator TermsDurationCode { get; set; }
 
         [JsonProperty("termsFrequencyCode")]
+        [JsonConverter(typeof(FraudVictimIndicatorDataConverter))]
         public FraudVictimIndicator TermsFrequencyCode { get; set; }
 
         [JsonProperty("paymentHistory1to24")]
-        public FraudVictimIndicator[] PaymentHistory1To24 { get; set; }
+        public string PaymentHistory1To24 { get; set; }
 
         [JsonProperty("thirtyDayCounter")]
         public long? ThirtyDayCounter { get; set; }
@@ -702,7 +716,7 @@ namespace Decisions.Equifax.ConsumerCreditReport.Response
         public string PreviousHighDate3 { get; set; }
 
         [JsonProperty("24MonthPaymentHistory", NullValueHandling = NullValueHandling.Ignore)]
-        public FraudVictimIndicator[] The24MonthPaymentHistory { get; set; }
+        public string The24MonthPaymentHistory { get; set; }
 
         [JsonProperty("dateMajorDelinquencyFirstReported")]
         public string DateMajorDelinquencyFirstReported { get; set; }
@@ -720,30 +734,21 @@ namespace Decisions.Equifax.ConsumerCreditReport.Response
         public string ClosedDate { get; set; }
 
         [JsonProperty("activityDesignatorCode")]
+        [JsonConverter(typeof(FraudVictimIndicatorDataConverter))]
         public FraudVictimIndicator ActivityDesignatorCode { get; set; }
 
         [JsonProperty("purchasedFromOrSoldCreditorIndicator")]
+        [JsonConverter(typeof(FraudVictimIndicatorDataConverter))]
         public FraudVictimIndicator PurchasedFromOrSoldCreditorIndicator { get; set; }
 
         [JsonProperty("purchasedFromOrSoldCreditorName")]
         public string PurchasedFromOrSoldCreditorName { get; set; }
 
         [JsonProperty("creditorClassificationCode")]
+        [JsonConverter(typeof(FraudVictimIndicatorDataConverter))]
         public FraudVictimIndicator CreditorClassificationCode { get; set; }
 
         [JsonProperty("actualPaymentAmount")]
         public long? ActualPaymentAmount { get; set; }
     }
-
-    [DataContract]
-    [Writable]
-    public partial class Rate
-    {
-        [JsonProperty("code")]
-        public long Code { get; set; }
-
-        [JsonProperty("description")]
-        public string Description { get; set; }
-    }
-    
 }
