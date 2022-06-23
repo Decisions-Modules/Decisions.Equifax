@@ -1,10 +1,7 @@
 ﻿using System.Collections.Generic;
-using System.ComponentModel;
 using DecisionsFramework;
 using DecisionsFramework.Data.ORMapper;
-using DecisionsFramework.Design.ConfigurationStorage.Attributes;
 using DecisionsFramework.Design.Properties;
-using DecisionsFramework.Design.Properties.Attributes;
 using DecisionsFramework.ServiceLayer;
 using DecisionsFramework.ServiceLayer.Actions;
 using DecisionsFramework.ServiceLayer.Actions.Common;
@@ -43,8 +40,6 @@ namespace Decisions.Equifax
         [ORMField]
         [PropertyClassification(new string[] {"Limited Consumer Report"}, "OAuth Scope", 1)]
         public string EquifaxConsumerCreditReportScope { get; set; }
-
-       
 
         public ValidationIssue[] GetValidationIssues()
         {

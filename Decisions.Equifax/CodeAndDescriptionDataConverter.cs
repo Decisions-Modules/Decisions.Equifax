@@ -6,31 +6,31 @@ using JsonConverter = Newtonsoft.Json.JsonConverter;
 
 namespace Decisions.Equifax
 {
-    internal class FraudVictimIndicatorDataConverter : JsonConverter
+    internal class CodeAndDescriptionDataConverter : JsonConverter
     {
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
             serializer.Serialize(writer, value);
         }
 
-        public override FraudVictimIndicator ReadJson(JsonReader reader, Type objectType, object existingValue,
+        public override CodeAndDescription ReadJson(JsonReader reader, Type objectType, object existingValue,
             JsonSerializer serializer)
         {
             if (reader.TokenType == JsonToken.StartArray)
             {
-                FraudVictimIndicator deserializeResult =
-                    serializer.Deserialize<FraudVictimIndicator[]>(reader).FirstOrDefault();
+                CodeAndDescription deserializeResult =
+                    serializer.Deserialize<CodeAndDescription[]>(reader).FirstOrDefault();
                 return deserializeResult;
             }
 
             string JsonResonse = serializer.Deserialize(reader).ToString();
             
-            return JsonConvert.DeserializeObject<FraudVictimIndicator>(JsonResonse);
+            return JsonConvert.DeserializeObject<CodeAndDescription>(JsonResonse);
         }
 
         public override bool CanConvert(Type objectType)
         {
-            return (typeof(FraudVictimIndicator) == objectType);
+            return (typeof(CodeAndDescription) == objectType);
         }
     }
 }

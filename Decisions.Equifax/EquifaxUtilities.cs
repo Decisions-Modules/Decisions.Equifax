@@ -1,54 +1,48 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Net;
-using System.Text.Encodings.Web;
 using Decisions.Equifax.ConsumerCreditReport.Request;
 using Decisions.Equifax.ConsumerCreditReport.Response;
 using Decisions.Equifax.PreQualificationOfOne.Response;
 using DecisionsFramework;
-using DecisionsFramework.Design.ConfigurationStorage.Attributes;
-using DecisionsFramework.Design.Flow;
-using DecisionsFramework.Design.Flow.CoreSteps;
-using DecisionsFramework.Design.Flow.Mapping;
-using DecisionsFramework.Design.Properties.Attributes;
 using DecisionsFramework.ServiceLayer;
-using DecisionsFramework.ServiceLayer.Services.ContextData;
 using Newtonsoft.Json;
+using JsonConverter = System.Text.Json.Serialization.JsonConverter;
+
 namespace Decisions.Equifax
 {
     public class EquifaxUtilities
     {
         public static readonly Log log = new Log(EquifaxConstants.LogCat);
+        
+        public static JsonSerializerSettings js => new JsonSerializerSettings()
+        {
+            NullValueHandling = NullValueHandling.Ignore
+        };
 
         internal static ConsumerCreditReportResponse ExecuteCreditReportRequest(ConsumerCreditReportRequest request, string scope, string requestUrl)
         {
             string responseString = RequestSerializer(request, scope, requestUrl);
 
-            ConsumerCreditReportResponse limitedCreditResponse = new ConsumerCreditReportResponse();
+            ConsumerCreditReportResponse limitedCreditResponse;
            
                 limitedCreditResponse = JsonConvert.DeserializeObject<ConsumerCreditReportResponse>(
-                    responseString, new JsonSerializerSettings {NullValueHandling = NullValueHandling.Ignore});
+                    responseString, js);
                 return limitedCreditResponse;
         }
         internal static PreQualificationOfOneResponse ExecutePrequalificationRequest(ConsumerCreditReportRequest request, string scope, string requestUrl)
         {
             string responseString = RequestSerializer(request, scope, requestUrl);
-            PreQualificationOfOneResponse preQualResponse = new PreQualificationOfOneResponse();
+            PreQualificationOfOneResponse preQualResponse;
             preQualResponse  = JsonConvert.DeserializeObject<PreQualificationOfOneResponse>(
-                responseString, new JsonSerializerSettings {NullValueHandling = NullValueHandling.Ignore});
+                responseString, js);
             
             return preQualResponse;
         }
 
         private static string  RequestSerializer(ConsumerCreditReportRequest request, string scope, string requestUrl)
         {
-            JsonSerializerSettings jsonSettings = new JsonSerializerSettings
-            {
-                NullValueHandling = NullValueHandling.Ignore
-            };
-
-            if (string.IsNullOrWhiteSpace(scope))
-                throw new LoggedException(EquifaxConstants.SETTINGS_CONFIGURATION_EXCEPTION);
+            JsonSerializerSettings jsonSettings = js;
+            
             string requestToken = GetOAuthToken(scope);
             string requestString = JsonConvert.SerializeObject(request, jsonSettings);
             var req = (HttpWebRequest) WebRequest.Create(requestUrl);
@@ -58,7 +52,7 @@ namespace Decisions.Equifax
             req.ContentLength = requestString.Length;
             req.AutomaticDecompression = DecompressionMethods.GZip;
 
-            Log log = new Log(EquifaxConstants.LogCat);
+            
             log.Debug($"URL:{requestUrl}\r\nScope:{scope}\r\nHasToken:{(!string.IsNullOrWhiteSpace(requestToken))}");
 
             // Write body

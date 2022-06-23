@@ -1,11 +1,8 @@
 ﻿using Decisions.Equifax.ConsumerCreditReport.Request;
-using Decisions.Equifax.ConsumerCreditReport.Response;
-using Decisions.Equifax.PrequalificationOfOne.Request;
 using Decisions.Equifax.PreQualificationOfOne.Response;
 using DecisionsFramework;
 using DecisionsFramework.Design.Flow;
 using DecisionsFramework.ServiceLayer;
-using Newtonsoft.Json;
 
 namespace Decisions.Equifax.PrequalificationOfOne
 {
@@ -19,9 +16,12 @@ namespace Decisions.Equifax.PrequalificationOfOne
         /// </summary>
         public static PreQualificationOfOneResponse GetPrequalificationOfOne(ConsumerCreditReportRequest request)
         {
-            string scope = ModuleSettingsAccessor<EquifaxSettings>.Instance.EquifaxPreQualificationOfOneScope;
-            string requestUrl = ModuleSettingsAccessor<EquifaxSettings>.Instance.EquifaxPreQualificationOfOneEndpoint;
-            string stepCalled = "PreQualification";
+            string scope = ModuleSettingsAccessor<EquifaxSettings>.GetSettings().EquifaxPreQualificationOfOneScope;
+            string requestUrl = ModuleSettingsAccessor<EquifaxSettings>.GetSettings().EquifaxPreQualificationOfOneEndpoint;
+            if (string.IsNullOrWhiteSpace(scope)|| string.IsNullOrWhiteSpace(requestUrl))
+            {
+                throw new LoggedException(EquifaxConstants.SETTINGS_CONFIGURATION_EXCEPTION);
+            }
             return EquifaxUtilities.ExecutePrequalificationRequest(request, scope, requestUrl);
         }
     }

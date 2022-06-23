@@ -16,9 +16,12 @@ namespace Decisions.Equifax.ConsumerCreditReport
         /// </summary>
         public static ConsumerCreditReportResponse GetConsumerCreditReport(ConsumerCreditReportRequest request)
         {
-            string scope = ModuleSettingsAccessor<EquifaxSettings>.Instance.EquifaxConsumerCreditReportScope;
-            string requestUrl = ModuleSettingsAccessor<EquifaxSettings>.Instance.EquifaxConsumerCreditReportEndpoint;
-            string stepCalled = "LimitCreditReport";
+            string scope = ModuleSettingsAccessor<EquifaxSettings>.GetSettings().EquifaxConsumerCreditReportScope;
+            string requestUrl = ModuleSettingsAccessor<EquifaxSettings>.GetSettings().EquifaxConsumerCreditReportEndpoint;
+            if (string.IsNullOrWhiteSpace(scope)|| string.IsNullOrWhiteSpace(requestUrl))
+            {
+                throw new LoggedException(EquifaxConstants.SETTINGS_CONFIGURATION_EXCEPTION);
+            }
             return EquifaxUtilities.ExecuteCreditReportRequest(request, scope, requestUrl);
         }
     }

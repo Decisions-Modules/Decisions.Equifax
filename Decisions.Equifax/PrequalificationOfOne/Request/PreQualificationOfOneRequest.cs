@@ -1,7 +1,4 @@
-﻿using System.Runtime.Serialization;
-using DecisionsFramework.Design.ConfigurationStorage.Attributes;
-using Newtonsoft.Json;
-using Decisions.Equifax.ConsumerCreditReport.Request;
+﻿using Decisions.Equifax.ConsumerCreditReport.Request;
 
 namespace Decisions.Equifax.PrequalificationOfOne.Request
 {
