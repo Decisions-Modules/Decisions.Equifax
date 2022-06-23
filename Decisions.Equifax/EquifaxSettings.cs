@@ -25,6 +25,7 @@ namespace Decisions.Equifax
         [ORMField]
         [PropertyClassification(new string[] {"OAuth Settings"} , "API Client Secret", 6)]
         public string EquifaxClientSecret { get; set; }
+        
         [ORMField]
         [PropertyClassification(new string[] {"PreQualification of One"} , "API Endpoint Url", 2)]
         public string EquifaxPreQualificationOfOneEndpoint { get; set; }
