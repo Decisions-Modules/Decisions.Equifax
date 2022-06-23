@@ -9,8 +9,6 @@ namespace Decisions.Equifax.ConsumerCreditReport
     [AutoRegisterMethodsOnClass(true, "Integration/Equifax/Consumer Credit Report")]
     public class ConsumerCreditReportSteps
     {
-        private static readonly Log log = new Log(EquifaxConstants.LogCat);
-        
         /// <summary>
         /// Step: Get Consumer Credit Report (Integration/Equifax/Consumer Credit Report/Get Consumer Credit Report)
         /// </summary>

@@ -9,8 +9,6 @@ namespace Decisions.Equifax.PrequalificationOfOne
     [AutoRegisterMethodsOnClass(true, "Integration/Equifax/Pre-qualification of One")]
     public class PreQualificationOfOneSteps 
     {
-        private static readonly Log log = new Log(EquifaxConstants.LogCat);
-        
         /// <summary>
         /// Step: Get Pre-qualification of One (Integration/Equifax/Consumer Credit Report/Pre-qualification of One)
         /// </summary>
