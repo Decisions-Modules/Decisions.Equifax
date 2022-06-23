@@ -23,9 +23,7 @@ namespace Decisions.Equifax
         {
             string responseString = RequestSerializer(request, scope, requestUrl);
 
-            ConsumerCreditReportResponse limitedCreditResponse;
-           
-                limitedCreditResponse = JsonConvert.DeserializeObject<ConsumerCreditReportResponse>(
+            ConsumerCreditReportResponse limitedCreditResponse = JsonConvert.DeserializeObject<ConsumerCreditReportResponse>(
                     responseString, js);
                 return limitedCreditResponse;
         }
@@ -33,8 +31,7 @@ namespace Decisions.Equifax
         internal static PreQualificationOfOneResponse ExecutePrequalificationRequest(ConsumerCreditReportRequest request, string scope, string requestUrl)
         {
             string responseString = RequestSerializer(request, scope, requestUrl);
-            PreQualificationOfOneResponse preQualResponse;
-            preQualResponse  = JsonConvert.DeserializeObject<PreQualificationOfOneResponse>(
+            PreQualificationOfOneResponse preQualResponse  = JsonConvert.DeserializeObject<PreQualificationOfOneResponse>(
                 responseString, js);
             
             return preQualResponse;
