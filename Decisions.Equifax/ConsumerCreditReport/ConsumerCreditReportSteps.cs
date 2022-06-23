@@ -18,8 +18,8 @@ namespace Decisions.Equifax.ConsumerCreditReport
         {
             string scope = ModuleSettingsAccessor<EquifaxSettings>.Instance.EquifaxConsumerCreditReportScope;
             string requestUrl = ModuleSettingsAccessor<EquifaxSettings>.Instance.EquifaxConsumerCreditReportEndpoint;
-            string stepCalled = "LimitedCreditReport";
-            return EquifaxUtilities.ExecuteCreditReportRequest(request, scope, requestUrl, stepCalled);
+            string stepCalled = "LimitCreditReport";
+            return EquifaxUtilities.ExecuteCreditReportRequest(request, scope, requestUrl);
         }
     }
 }

@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text.Json.Serialization;
-using Decisions.Equifax.ConsumerCreditReport.Response;
-using DecisionsFramework.Utilities;
+using Decisions.Equifax.PreQualificationOfOne.Response;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using JsonConverter = Newtonsoft.Json.JsonConverter;
 
 namespace Decisions.Equifax

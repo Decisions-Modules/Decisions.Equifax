@@ -18,28 +18,49 @@ namespace Decisions.Equifax
 {
     public class EquifaxUtilities
     {
-        private static readonly Log log = new Log(EquifaxConstants.LogCat);
-        
-        internal static ConsumerCreditReportResponse ExecuteCreditReportRequest(ConsumerCreditReportRequest request, string scope, string requestUrl, string stepCalled )
+        public static readonly Log log = new Log(EquifaxConstants.LogCat);
+
+        internal static ConsumerCreditReportResponse ExecuteCreditReportRequest(ConsumerCreditReportRequest request, string scope, string requestUrl)
+        {
+            string responseString = RequestSerializer(request, scope, requestUrl);
+
+            ConsumerCreditReportResponse limitedCreditResponse = new ConsumerCreditReportResponse();
+           
+                limitedCreditResponse = JsonConvert.DeserializeObject<ConsumerCreditReportResponse>(
+                    responseString, new JsonSerializerSettings {NullValueHandling = NullValueHandling.Ignore});
+                return limitedCreditResponse;
+        }
+        internal static PreQualificationOfOneResponse ExecutePrequalificationRequest(ConsumerCreditReportRequest request, string scope, string requestUrl)
+        {
+            string responseString = RequestSerializer(request, scope, requestUrl);
+            PreQualificationOfOneResponse preQualResponse = new PreQualificationOfOneResponse();
+            preQualResponse  = JsonConvert.DeserializeObject<PreQualificationOfOneResponse>(
+                responseString, new JsonSerializerSettings {NullValueHandling = NullValueHandling.Ignore});
+            
+            return preQualResponse;
+        }
+
+        private static string  RequestSerializer(ConsumerCreditReportRequest request, string scope, string requestUrl)
         {
             JsonSerializerSettings jsonSettings = new JsonSerializerSettings
             {
                 NullValueHandling = NullValueHandling.Ignore
             };
-            
+
             if (string.IsNullOrWhiteSpace(scope))
                 throw new LoggedException(EquifaxConstants.SETTINGS_CONFIGURATION_EXCEPTION);
             string requestToken = GetOAuthToken(scope);
             string requestString = JsonConvert.SerializeObject(request, jsonSettings);
-            var req = (System.Net.HttpWebRequest) System.Net.WebRequest.Create(requestUrl);
-            req.Headers.Add("Authorization: Bearer " + requestToken); 
+            var req = (HttpWebRequest) WebRequest.Create(requestUrl);
+            req.Headers.Add("Authorization: Bearer " + requestToken);
             req.Method = "POST";
             req.ContentType = "application/json";
             req.ContentLength = requestString.Length;
             req.AutomaticDecompression = DecompressionMethods.GZip;
 
+            Log log = new Log(EquifaxConstants.LogCat);
             log.Debug($"URL:{requestUrl}\r\nScope:{scope}\r\nHasToken:{(!string.IsNullOrWhiteSpace(requestToken))}");
-            
+
             // Write body
             using (StreamWriter sw = new StreamWriter(req.GetRequestStream()))
             {
@@ -63,34 +84,19 @@ namespace Decisions.Equifax
                         }
                     }
                 }
-
-                ConsumerCreditReportResponse cr = new ConsumerCreditReportResponse();
-                if (stepCalled == "LimitedCreditReport")
-                {
-                    cr = JsonConvert.DeserializeObject<ConsumerCreditReportResponse>(
-                        responseString, new JsonSerializerSettings {NullValueHandling = NullValueHandling.Ignore});
-                }
-
-                if (stepCalled == "PreQualification")
-                {
-                    cr = JsonConvert.DeserializeObject<PreQualificationOfOneResponse>(
-                        responseString, new JsonSerializerSettings {NullValueHandling = NullValueHandling.Ignore});
-                }
-
-                return cr;
             }
             catch (WebException ex)
             {
                 log.Error(ex.Message);
             }
 
-            return null;
+            return responseString;
         }
-
         /// <summary>
         /// Helper: Generic Get OAuth via client credentials
         /// </summary>
-        private static string GetOAuthToken(string scope)
+
+         private static string GetOAuthToken(string scope)
         {
             string requestUrl = ModuleSettingsAccessor<EquifaxSettings>.Instance.EquifaxOAuthUrl;
             string clientId = ModuleSettingsAccessor<EquifaxSettings>.Instance.EquifaxClientId;
@@ -101,7 +107,6 @@ namespace Decisions.Equifax
             {
                 log.Error(EquifaxConstants.SETTINGS_CONFIGURATION_EXCEPTION);
             }
-            
             
             HttpWebRequest request = (HttpWebRequest) WebRequest.Create(requestUrl);
             string body = "scope=" + System.Web.HttpUtility.UrlEncode( scope ) + "&grant_type=client_credentials";
@@ -151,5 +156,4 @@ namespace Decisions.Equifax
             return resp.AccessToken;
         }
     }
-        
-    }
+}
