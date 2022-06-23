@@ -29,6 +29,7 @@ namespace Decisions.Equifax
                     responseString, js);
                 return limitedCreditResponse;
         }
+        
         internal static PreQualificationOfOneResponse ExecutePrequalificationRequest(ConsumerCreditReportRequest request, string scope, string requestUrl)
         {
             string responseString = RequestSerializer(request, scope, requestUrl);
