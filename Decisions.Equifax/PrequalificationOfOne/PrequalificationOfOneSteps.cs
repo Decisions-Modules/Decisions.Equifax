@@ -20,6 +20,7 @@ namespace Decisions.Equifax.PrequalificationOfOne
             {
                 throw new LoggedException(EquifaxConstants.SETTINGS_CONFIGURATION_EXCEPTION);
             }
+            
             return EquifaxUtilities.ExecutePrequalificationRequest(request, scope, requestUrl);
         }
     }

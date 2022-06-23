@@ -76,8 +76,7 @@ namespace Decisions.Equifax
 
             return validationIssues.ToArray();
         }
-        
-        
+
         public void Initialize()
         {
             // Read the Settings here

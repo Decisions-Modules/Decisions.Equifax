@@ -84,11 +84,11 @@ namespace Decisions.Equifax
 
             return responseString;
         }
+        
         /// <summary>
         /// Helper: Generic Get OAuth via client credentials
         /// </summary>
-
-         private static string GetOAuthToken(string scope)
+        private static string GetOAuthToken(string scope)
         {
             string requestUrl = ModuleSettingsAccessor<EquifaxSettings>.Instance.EquifaxOAuthUrl;
             string clientId = ModuleSettingsAccessor<EquifaxSettings>.Instance.EquifaxClientId;

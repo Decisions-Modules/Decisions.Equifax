@@ -20,6 +20,7 @@ namespace Decisions.Equifax.ConsumerCreditReport
             {
                 throw new LoggedException(EquifaxConstants.SETTINGS_CONFIGURATION_EXCEPTION);
             }
+            
             return EquifaxUtilities.ExecuteCreditReportRequest(request, scope, requestUrl);
         }
     }
