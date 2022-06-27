@@ -19,13 +19,13 @@ namespace Decisions.Equifax
             if (reader.TokenType == JsonToken.StartArray)
             {
                 CodeAndDescription deserializeResult =
-                    serializer.Deserialize<CodeAndDescription[]>(reader).FirstOrDefault();
+                    (serializer.Deserialize<CodeAndDescription[]>(reader) ?? throw new InvalidOperationException()).FirstOrDefault();
                 return deserializeResult;
             }
 
-            string JsonResonse = serializer.Deserialize(reader).ToString();
+            string JsonResponse = serializer.Deserialize(reader).ToString();
             
-            return JsonConvert.DeserializeObject<CodeAndDescription>(JsonResonse);
+            return JsonConvert.DeserializeObject<CodeAndDescription>(JsonResponse);
         }
 
         public override bool CanConvert(Type objectType)

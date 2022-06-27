@@ -7,21 +7,20 @@ using DecisionsFramework.ServiceLayer;
 namespace Decisions.Equifax.ConsumerCreditReport
 {
     [AutoRegisterMethodsOnClass(true, "Integration/Equifax/Consumer Credit Report")]
-    public class ConsumerCreditReportSteps
+    public class ConsumerCreditReportStep
     {
         /// <summary>
         /// Step: Get Consumer Credit Report (Integration/Equifax/Consumer Credit Report/Get Consumer Credit Report)
         /// </summary>
         public static ConsumerCreditReportResponse GetConsumerCreditReport(ConsumerCreditReportRequest request)
         {
-            string scope = ModuleSettingsAccessor<EquifaxSettings>.GetSettings().EquifaxConsumerCreditReportScope;
-            string requestUrl = ModuleSettingsAccessor<EquifaxSettings>.GetSettings().EquifaxConsumerCreditReportEndpoint;
-            if (string.IsNullOrWhiteSpace(scope)|| string.IsNullOrWhiteSpace(requestUrl))
+            EquifaxSettings equifaxSettings = ModuleSettingsAccessor<EquifaxSettings>.GetSettings();
+            if (string.IsNullOrWhiteSpace(equifaxSettings.EquifaxConsumerCreditReportScope)|| string.IsNullOrWhiteSpace(equifaxSettings.EquifaxConsumerCreditReportEndpoint))
             {
                 throw new LoggedException(EquifaxConstants.SETTINGS_CONFIGURATION_EXCEPTION);
             }
             
-            return EquifaxUtilities.ExecuteCreditReportRequest(request, scope, requestUrl);
+            return EquifaxUtilities.ExecuteCreditReportRequest(request, equifaxSettings.EquifaxConsumerCreditReportScope, equifaxSettings.EquifaxConsumerCreditReportEndpoint);
         }
     }
 }

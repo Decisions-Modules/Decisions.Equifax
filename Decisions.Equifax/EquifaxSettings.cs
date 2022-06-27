@@ -15,7 +15,7 @@ namespace Decisions.Equifax
     public class EquifaxSettings : AbstractModuleSettings, IInitializable, IValidationSource
     {
         [ORMField]
-        [PropertyClassification(new string[] {"OAuth Settings"} , "OAuth URL",4)]
+        [PropertyClassification(new string[] {"OAuth Settings"} , "OAuth URL", 4)]
         public string EquifaxOAuthUrl { get; set; }
 
         [ORMField]
@@ -27,11 +27,11 @@ namespace Decisions.Equifax
         public string EquifaxClientSecret { get; set; }
         
         [ORMField]
-        [PropertyClassification(new string[] {"PreQualification of One"} , "API Endpoint Url", 2)]
+        [PropertyClassification(new string[] {"Pre-qualification of One"} , "API Endpoint Url", 2)]
         public string EquifaxPreQualificationOfOneEndpoint { get; set; }
 
         [ORMField]
-        [PropertyClassification(new string[] {"PreQualification of One"}, "OAuth Scope", 3)]
+        [PropertyClassification(new string[] {"Pre-qualification of One"}, "OAuth Scope", 3)]
         public string EquifaxPreQualificationOfOneScope { get; set; }
        
         [ORMField]
