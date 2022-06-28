@@ -31,10 +31,10 @@ namespace Decisions.Equifax
         internal static PreQualificationOfOneResponse ExecutePreQualificationRequest(ConsumerCreditReportRequest request, string scope, string requestUrl)
         {
             string responseString = RequestSerializer(request, scope, requestUrl);
-            PreQualificationOfOneResponse preQualResponse  = JsonConvert.DeserializeObject<PreQualificationOfOneResponse>(
+            PreQualificationOfOneResponse preQualificationResponse  = JsonConvert.DeserializeObject<PreQualificationOfOneResponse>(
                 responseString, jsonSerializerSettings);
             
-            return preQualResponse;
+            return preQualificationResponse;
         }
 
         private static string  RequestSerializer(ConsumerCreditReportRequest request, string scope, string requestUrl)
@@ -75,7 +75,7 @@ namespace Decisions.Equifax
             }
             catch (WebException ex)
             {
-                log.Error(ex.Message);
+                throw new LoggedException(ex.Message);
             }
 
             return responseString;
@@ -130,7 +130,8 @@ namespace Decisions.Equifax
             }
             catch (WebException ex)
             {
-                log.Error(ex.Message);
+                throw new LoggedException(ex.Message);
+                
             }
 
             OAuthResponse resp = JsonConvert.DeserializeObject<OAuthResponse>(responseString);

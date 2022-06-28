@@ -23,9 +23,14 @@ namespace Decisions.Equifax
                 return deserializeResult;
             }
 
-            string JsonResponse = serializer.Deserialize(reader).ToString();
-            
-            return JsonConvert.DeserializeObject<CodeAndDescription>(JsonResponse);
+            string jsonResponse = serializer.Deserialize(reader)?.ToString();
+
+            if (jsonResponse != null)
+            {
+                return JsonConvert.DeserializeObject<CodeAndDescription>(jsonResponse);
+            }
+
+            return null;
         }
 
         public override bool CanConvert(Type objectType)
