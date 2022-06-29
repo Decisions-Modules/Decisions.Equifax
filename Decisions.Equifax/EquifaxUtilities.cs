@@ -1,6 +1,11 @@
-﻿using System.IO;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Text;
+using System.Threading.Tasks;
 using Decisions.Equifax.ConsumerCreditReport.Request;
 using Decisions.Equifax.ConsumerCreditReport.Response;
 using Decisions.Equifax.PreQualificationOfOne.Response;
@@ -14,7 +19,7 @@ namespace Decisions.Equifax
     {
         private static readonly Log log = new Log(EquifaxConstants.LogCat);
         
-        private static JsonSerializerSettings jsonSerializerSettings => new JsonSerializerSettings()
+        private static JsonSerializerSettings JsonSerializerSettings => new JsonSerializerSettings()
         {
             NullValueHandling = NullValueHandling.Ignore
         };
@@ -24,7 +29,7 @@ namespace Decisions.Equifax
             string responseString = RequestSerializer(request, scope, requestUrl);
 
             ConsumerCreditReportResponse limitedCreditResponse = JsonConvert.DeserializeObject<ConsumerCreditReportResponse>(
-                    responseString, jsonSerializerSettings);
+                    responseString, JsonSerializerSettings);
                 return limitedCreditResponse;
         }
         
@@ -32,52 +37,42 @@ namespace Decisions.Equifax
         {
             string responseString = RequestSerializer(request, scope, requestUrl);
             PreQualificationOfOneResponse preQualificationResponse  = JsonConvert.DeserializeObject<PreQualificationOfOneResponse>(
-                responseString, jsonSerializerSettings);
+                responseString, JsonSerializerSettings);
             
             return preQualificationResponse;
         }
 
+        
         private static string  RequestSerializer(ConsumerCreditReportRequest request, string scope, string requestUrl)
         {
             string requestToken = GetOAuthToken(scope);
-            string requestString = JsonConvert.SerializeObject(request, jsonSerializerSettings);
-            var req = (HttpWebRequest) WebRequest.Create(requestUrl);
-            req.Headers.Add("Authorization: Bearer " + requestToken);
-            req.Method = "POST";
-            req.ContentType = "application/json";
-            req.ContentLength = requestString.Length;
-            req.AutomaticDecompression = DecompressionMethods.GZip;
+            string requestString = JsonConvert.SerializeObject(request, JsonSerializerSettings);
+            HttpClientHandler handler = new HttpClientHandler()
+            {
+                AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate
+            };
+            HttpClient client = new HttpClient(handler);
+            HttpRequestMessage requestMessage = new HttpRequestMessage(HttpMethod.Post, requestUrl);
+            byte[] byteArray = Encoding.UTF8.GetBytes(requestString);
+            requestMessage.Content = new ByteArrayContent(byteArray);
+            requestMessage.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+            requestMessage.Headers.Authorization = new AuthenticationHeaderValue("Bearer", requestToken);          
+            HttpContent content = requestMessage.Content;
+            HttpResponseMessage responseMessage =  client.PostAsync(requestUrl, content).GetAwaiter().GetResult();
 
-            HttpClient client = new HttpClient();
+            responseMessage.EnsureSuccessStatusCode();
             
             log.Debug($"URL:{requestUrl}\r\nScope:{scope}\r\nHasToken:{(!string.IsNullOrWhiteSpace(requestToken))}");
-
-            // Write body
-            using (StreamWriter sw = new StreamWriter(req.GetRequestStream()))
-            {
-                sw.Write(requestString);
-                sw.Flush();
-            }
-
-            // Get response
-            string responseString = string.Empty;
-            try
-            {
-                using (var httpResponse = (HttpWebResponse) req.GetResponse())
-                using (Stream dataStream = httpResponse.GetResponseStream())
+            
+            string responseString;
+            using (Stream responseStream = responseMessage.Content.ReadAsStream())
+            { // Get response
+                using (StreamReader streamReader = new StreamReader(responseStream))
                 {
-                    if (dataStream != null)
-                    {
-                        using StreamReader streamReader = new StreamReader(dataStream);
-                        responseString = streamReader.ReadToEnd();
-                    }
+                    responseString = streamReader.ReadToEnd();
                 }
             }
-            catch (WebException ex)
-            {
-                throw new LoggedException(ex.Message);
-            }
-
+            
             return responseString;
         }
         
@@ -120,18 +115,14 @@ namespace Decisions.Equifax
                 {
                     if (dataStream != null)
                     {
-                        string sts = httpResponse.ContentEncoding;
-                        using (StreamReader streamReader = new StreamReader(dataStream))
-                        {
-                            responseString = streamReader.ReadToEnd();
-                        }
+                        using StreamReader streamReader = new StreamReader(dataStream);
+                        responseString = streamReader.ReadToEnd();
                     }
                 }
             }
             catch (WebException ex)
             {
                 throw new LoggedException(ex.Message);
-                
             }
 
             OAuthResponse resp = JsonConvert.DeserializeObject<OAuthResponse>(responseString);
