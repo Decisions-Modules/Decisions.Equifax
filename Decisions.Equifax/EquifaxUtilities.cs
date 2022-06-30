@@ -57,12 +57,10 @@ namespace Decisions.Equifax
             };
             HttpClient client = new HttpClient(handler);
             HttpRequestMessage requestMessage = new HttpRequestMessage(HttpMethod.Post, requestUrl);
-            byte[] byteArray = Encoding.UTF8.GetBytes(requestString);
-            requestMessage.Content = new ByteArrayContent(byteArray);
+            requestMessage.Content = new StringContent(requestString);
             requestMessage.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-            HttpContent content = requestMessage.Content;
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", requestToken);
-            HttpResponseMessage responseMessage = client.PostAsync(requestUrl, content).GetAwaiter().GetResult();
+            HttpResponseMessage responseMessage = client.PostAsync(requestUrl, requestMessage.Content).GetAwaiter().GetResult();
            
             responseMessage.EnsureSuccessStatusCode();
             
