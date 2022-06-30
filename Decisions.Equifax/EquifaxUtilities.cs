@@ -66,8 +66,7 @@ namespace Decisions.Equifax
            
             responseMessage.EnsureSuccessStatusCode();
             
-            log.Debug(
-                $"URL:{requestUrl}\r\nScope:{scope}\r\nHasToken:{(!string.IsNullOrWhiteSpace(requestToken))}");
+            log.Debug($"URL:{requestUrl}\r\nScope:{scope}\r\nHasToken:{(!string.IsNullOrWhiteSpace(requestToken))}");
             string responseString;
             using (Stream responseStream = responseMessage.Content.ReadAsStream())
             {
