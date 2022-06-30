@@ -18,32 +18,36 @@ namespace Decisions.Equifax
     public static class EquifaxUtilities
     {
         private static readonly Log log = new Log(EquifaxConstants.LogCat);
-        
+
         private static JsonSerializerSettings JsonSerializerSettings => new JsonSerializerSettings()
         {
             NullValueHandling = NullValueHandling.Ignore
         };
 
-        internal static ConsumerCreditReportResponse ExecuteCreditReportRequest(ConsumerCreditReportRequest request, string scope, string requestUrl)
+        internal static ConsumerCreditReportResponse ExecuteCreditReportRequest(ConsumerCreditReportRequest request,
+            string scope, string requestUrl)
         {
             string responseString = RequestSerializer(request, scope, requestUrl);
 
-            ConsumerCreditReportResponse limitedCreditResponse = JsonConvert.DeserializeObject<ConsumerCreditReportResponse>(
+            ConsumerCreditReportResponse limitedCreditResponse =
+                JsonConvert.DeserializeObject<ConsumerCreditReportResponse>(
                     responseString, JsonSerializerSettings);
-                return limitedCreditResponse;
+            return limitedCreditResponse;
         }
-        
-        internal static PreQualificationOfOneResponse ExecutePreQualificationRequest(ConsumerCreditReportRequest request, string scope, string requestUrl)
+
+        internal static PreQualificationOfOneResponse ExecutePreQualificationRequest(
+            ConsumerCreditReportRequest request, string scope, string requestUrl)
         {
             string responseString = RequestSerializer(request, scope, requestUrl);
-            PreQualificationOfOneResponse preQualificationResponse  = JsonConvert.DeserializeObject<PreQualificationOfOneResponse>(
-                responseString, JsonSerializerSettings);
-            
+            PreQualificationOfOneResponse preQualificationResponse =
+                JsonConvert.DeserializeObject<PreQualificationOfOneResponse>(
+                    responseString, JsonSerializerSettings);
+
             return preQualificationResponse;
         }
 
-        
-        private static string  RequestSerializer(ConsumerCreditReportRequest request, string scope, string requestUrl)
+
+        private static string RequestSerializer(ConsumerCreditReportRequest request, string scope, string requestUrl)
         {
             string requestToken = GetOAuthToken(scope);
             string requestString = JsonConvert.SerializeObject(request, JsonSerializerSettings);
@@ -56,26 +60,30 @@ namespace Decisions.Equifax
             byte[] byteArray = Encoding.UTF8.GetBytes(requestString);
             requestMessage.Content = new ByteArrayContent(byteArray);
             requestMessage.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-            requestMessage.Headers.Authorization = new AuthenticationHeaderValue("Bearer", requestToken);          
             HttpContent content = requestMessage.Content;
-            HttpResponseMessage responseMessage =  client.PostAsync(requestUrl, content).GetAwaiter().GetResult();
-
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", requestToken);
+            HttpResponseMessage responseMessage = client.PostAsync(requestUrl, content).GetAwaiter().GetResult();
+           
             responseMessage.EnsureSuccessStatusCode();
             
-            log.Debug($"URL:{requestUrl}\r\nScope:{scope}\r\nHasToken:{(!string.IsNullOrWhiteSpace(requestToken))}");
-            
-            string responseString;
-            using (Stream responseStream = responseMessage.Content.ReadAsStream())
-            { // Get response
-                using (StreamReader streamReader = new StreamReader(responseStream))
+                log.Debug(
+                    $"URL:{requestUrl}\r\nScope:{scope}\r\nHasToken:{(!string.IsNullOrWhiteSpace(requestToken))}");
+                string responseString;
+                using (Stream responseStream = responseMessage.Content.ReadAsStream())
                 {
-                    responseString = streamReader.ReadToEnd();
+                    // Get response
+                    using (StreamReader streamReader = new StreamReader(responseStream))
+                    {
+                        responseString = streamReader.ReadToEnd();
+                    }
                 }
-            }
-            
-            return responseString;
+
+                return responseString;
+                
         }
-        
+
+
+
         /// <summary>
         /// Helper: Generic Get OAuth via client credentials
         /// </summary>
