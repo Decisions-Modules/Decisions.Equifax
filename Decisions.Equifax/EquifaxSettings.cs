@@ -60,19 +60,19 @@ namespace Decisions.Equifax
 
             // API Endpoint
             if (string.IsNullOrWhiteSpace(EquifaxConsumerCreditReportEndpoint))
-                validationIssues.Add(new ValidationIssue(this, "The Consumer Credit Report Endpoint Url is required.", null, BreakLevel.Fatal, nameof(EquifaxConsumerCreditReportEndpoint)));
+                validationIssues.Add(new ValidationIssue(this, "The Consumer Credit Report Endpoint Url is required when using the step.", null, BreakLevel.Warning, nameof(EquifaxConsumerCreditReportEndpoint)));
 
             // OAuth Scope for Endpoint
             if (string.IsNullOrWhiteSpace(EquifaxConsumerCreditReportScope))
-                validationIssues.Add(new ValidationIssue(this, "The OAuth Scope for Consumer Credit Report is required.", null, BreakLevel.Fatal, nameof(EquifaxConsumerCreditReportScope)));
+                validationIssues.Add(new ValidationIssue(this, "The OAuth Scope for Consumer Credit Report is required when using the step.", null, BreakLevel.Warning, nameof(EquifaxConsumerCreditReportScope)));
 
             // API Endpoint
             if (string.IsNullOrWhiteSpace(EquifaxPreQualificationOfOneEndpoint))
-                validationIssues.Add(new ValidationIssue(this, "The PreQualification of One Endpoint Url is required.", null, BreakLevel.Fatal, nameof(EquifaxPreQualificationOfOneEndpoint)));
+                validationIssues.Add(new ValidationIssue(this, "The PreQualification of One Endpoint Url is required when using the step.", null, BreakLevel.Warning, nameof(EquifaxPreQualificationOfOneEndpoint)));
 
             // OAuth Scope for Endpoint
             if (string.IsNullOrWhiteSpace(EquifaxPreQualificationOfOneScope))
-                validationIssues.Add(new ValidationIssue(this, "The OAuth Scope for PreQualification of One is required.", null, BreakLevel.Fatal, nameof(EquifaxPreQualificationOfOneScope)));
+                validationIssues.Add(new ValidationIssue(this, "The OAuth Scope for PreQualification of One is required when using the step..", null, BreakLevel.Warning, nameof(EquifaxPreQualificationOfOneScope)));
 
             return validationIssues.ToArray();
         }
