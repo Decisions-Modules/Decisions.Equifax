@@ -7,7 +7,7 @@ using DecisionsFramework.ServiceLayer;
 namespace Decisions.Equifax.ConsumerCreditReport
 {
     [AutoRegisterMethodsOnClass(true, "Integration/Equifax/Consumer Credit Report")]
-    public class ConsumerCreditReportStep
+    public class ConsumerCreditReportSteps
     {
         /// <summary>
         /// Step: Get Consumer Credit Report (Integration/Equifax/Consumer Credit Report/Get Consumer Credit Report)
