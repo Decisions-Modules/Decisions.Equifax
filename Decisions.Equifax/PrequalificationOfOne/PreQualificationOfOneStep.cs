@@ -10,7 +10,7 @@ namespace Decisions.Equifax.PrequalificationOfOne
     public class PreQualificationOfOneStep 
     {
         /// <summary>
-        /// Step: Get Pre-qualification of One (Integration/Equifax/Consumer Credit Report/Pre-qualification of One)
+        /// Step: Get Pre-qualification of One (Integration/Equifax/PreQualification/Get Pre-qualification of One)
         /// </summary>
         public static PreQualificationOfOneResponse GetPreQualificationOfOne(ConsumerCreditReportRequest request)
         {
