@@ -14,30 +14,41 @@ namespace Decisions.Equifax
             [JsonProperty("customerReferenceNumber")]
             public string CustomerReferenceNumber { get; set; }
 
-            [JsonProperty("customerNumber")] public string CustomerNumber { get; set; }
+            [JsonProperty("customerNumber")] 
+            public string CustomerNumber { get; set; }
 
-            [JsonProperty("consumerReferralCode")] public long ConsumerReferralCode { get; set; }
+            [JsonProperty("consumerReferralCode")] 
+            public long ConsumerReferralCode { get; set; }
 
             [JsonProperty("multipleReportIndicator")]
             public string MultipleReportIndicator { get; set; }
 
-            [JsonProperty("ECOAInquiryType")] public string EcoaInquiryType { get; set; }
+            [JsonProperty("ECOAInquiryType")] 
+            public string EcoaInquiryType { get; set; }
 
-            [JsonProperty("hitCode")] public CodeAndDescription HitCode { get; set; }
+            [JsonProperty("hitCode")] 
+            public CodeAndDescription HitCode { get; set; }
 
-            [JsonProperty("fileSinceDate")] public string FileSinceDate { get; set; }
+            [JsonProperty("fileSinceDate")] 
+            public string FileSinceDate { get; set; }
 
-            [JsonProperty("lastActivityDate")] public string LastActivityDate { get; set; }
+            [JsonProperty("lastActivityDate")] 
+            public string LastActivityDate { get; set; }
 
-            [JsonProperty("reportDate")] public string ReportDate { get; set; }
+            [JsonProperty("reportDate")] 
+            public string ReportDate { get; set; }
 
-            [JsonProperty("subjectName")] public SubjectName SubjectName { get; set; }
+            [JsonProperty("subjectName")] 
+            public SubjectName SubjectName { get; set; }
 
-            [JsonProperty("subjectSocialNum")] public long SubjectSocialNum { get; set; }
+            [JsonProperty("subjectSocialNum")] 
+            public long SubjectSocialNum { get; set; }
 
-            [JsonProperty("birthDate")] public string BirthDate { get; set; }
+            [JsonProperty("birthDate")] 
+            public string BirthDate { get; set; }
 
-            [JsonProperty("nameMatchFlags")] public NameMatchFlags NameMatchFlags { get; set; }
+            [JsonProperty("nameMatchFlags")] 
+            public NameMatchFlags NameMatchFlags { get; set; }
 
             [JsonProperty("doNotCombineIndicator")]
             public string DoNotCombineIndicator { get; set; }
@@ -48,38 +59,53 @@ namespace Decisions.Equifax
             [JsonProperty("fraudIDScanAlertCodes")]
             public CodeAndDescription[] FraudIdScanAlertCodes { get; set; }
 
-            [JsonProperty("fraudVictimIndicator")] public CodeAndDescription FraudVictimIndicator { get; set; }
+            [JsonProperty("fraudVictimIndicator")] 
+            public CodeAndDescription FraudVictimIndicator { get; set; }
 
-            [JsonProperty("addresses")] public AddressElement[] Addresses { get; set; }
+            [JsonProperty("addresses")] 
+            public AddressElement[] Addresses { get; set; }
 
-            [JsonProperty("formerNames")] public FormerName[] FormerNames { get; set; }
+            [JsonProperty("formerNames")] 
+            public FormerName[] FormerNames { get; set; }
 
-            [JsonProperty("employments")] public Employment[] Employments { get; set; }
+            [JsonProperty("employments")] 
+            public Employment[] Employments { get; set; }
 
-            [JsonProperty("bankruptcies")] public Bankruptcy[] Bankruptcies { get; set; }
+            [JsonProperty("bankruptcies")] 
+            public Bankruptcy[] Bankruptcies { get; set; }
 
-            [JsonProperty("collections")] public Collection[] Collections { get; set; }
+            [JsonProperty("collections")] 
+            public Collection[] Collections { get; set; }
 
-            [JsonProperty("alertContacts")] public AlertContact[] AlertContacts { get; set; }
+            [JsonProperty("alertContacts")] 
+            public AlertContact[] AlertContacts { get; set; }
 
-            [JsonProperty("trades")] public Trade[] Trades { get; set; }
+            [JsonProperty("trades")] 
+            public Trade[] Trades { get; set; }
 
-            [JsonProperty("inquiries")] public Inquiry[] Inquiries { get; set; }
+            [JsonProperty("inquiries")] 
+            public Inquiry[] Inquiries { get; set; }
 
-            [JsonProperty("models")] public Model[] Models { get; set; }
+            [JsonProperty("models")] 
+            public Model[] Models { get; set; }
 
-            [JsonProperty("identification")] public Identification Identification { get; set; }
+            [JsonProperty("identification")] 
+            public Identification Identification { get; set; }
 
-            [JsonProperty("attributes")] public EquifaxUsConsumerCreditReportAttribute[] Attributes { get; set; }
+            [JsonProperty("attributes")] 
+            public EquifaxUsConsumerCreditReportAttribute[] Attributes { get; set; }
 
-            [JsonProperty("onlineGeoCode")] public OnlineGeoCode[] OnlineGeoCode { get; set; }
+            [JsonProperty("onlineGeoCode")] 
+            public OnlineGeoCode[] OnlineGeoCode { get; set; }
 
-            [JsonProperty("OFACAlerts")] public OfacAlert[] OfacAlerts { get; set; }
+            [JsonProperty("OFACAlerts")] 
+            public OfacAlert[] OfacAlerts { get; set; }
 
             [JsonProperty("consumerReferralLocation")]
             public ConsumerReferralLocation ConsumerReferralLocation { get; set; }
 
-            [JsonProperty("alternateDataSources")] public AlternateDataSources AlternateDataSources { get; set; }
+            [JsonProperty("alternateDataSources")] 
+            public AlternateDataSources AlternateDataSources { get; set; }
         }
         
         [DataContract]
