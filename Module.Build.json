@@ -1,0 +1,19 @@
+{
+    "Resources": {
+		"NoComponents": true,
+		"CoreServicesDlls": [
+			"./Decisions.Equifax/obj/Decisions.Equifax.dll"
+		],
+		"CliDlls": null,
+		"WebPages": null,
+		"SilverlightDlls": null,
+		"AgentDlls": null,
+		"InstallScript": null,
+		"SqlScripts": null,
+		"ObjectsToImport": null,
+		"MsSqlScript": null
+    },
+    "Version": "8.15.0",
+    "ImagePath": "./image.png",
+    "Description": "The Equifax Services Module allows the fetching and processing report data from Equifax services."
+}
