@@ -71,6 +71,25 @@ namespace Decisions.Equifax
             // Read the Settings here
             ModuleSettingsAccessor<EquifaxSettings>.GetSettings();
         }
-        
+
+        public override BaseActionType[] GetActions(AbstractUserContext userContext, EntityActionType[] types)
+        {
+            Account userAccount = userContext.GetAccount();
+
+            FolderPermission permission = FolderService.Instance.GetAccountEffectivePermission(
+                new SystemUserContext(), this.EntityFolderID, userAccount.AccountID);
+
+            bool canAdministrate = FolderPermission.CanAdministrate == (FolderPermission.CanAdministrate & permission) ||
+                                   userAccount.GetUserRights<PortalAdministratorModuleRight>() != null ||
+                                   userAccount.IsAdministrator();
+
+            if (canAdministrate)
+                return new BaseActionType[]
+                {
+                    new EditEntityAction(GetType(), "Edit", null),
+                };
+
+            return new BaseActionType[0];
+        }
     }
 }
